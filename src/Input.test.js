@@ -6,7 +6,7 @@ import { findyByTestAttr, checkProps } from "./test/testUtils";
 import Input from "./Input";
 
 // const defaultProps = {
-//   guessedWords: [{ guessedWord: "train", letterMatchCount: 3 }],
+//   secretWord: "party",
 // };
 
 /**
@@ -15,10 +15,13 @@ import Input from "./Input";
  * @param {object} props - Component props specific to this setup.
  * @returns {ShallowWrapper}
  */
-const setup = () => {
-  // const setupProps = { ...defaultProps, ...props };
+// const setup = (props) => {
+//   const setupProps = { ...defaultProps, ...props };
 
-  return shallow(<Input />);
+//   return shallow(<Input {...setupProps} />);
+// };
+const setup = (secretWord = "party") => {
+  return shallow(<Input secretWord={secretWord} />);
 };
 
 it("renders without error", () => {
@@ -26,4 +29,8 @@ it("renders without error", () => {
   const inputComponent = findyByTestAttr(wrapper, "component-input");
 
   expect(inputComponent.length).toBe(1);
+});
+
+it("does not throw warning with expected props", () => {
+  checkProps(Input, { secretWord: "party" });
 });
