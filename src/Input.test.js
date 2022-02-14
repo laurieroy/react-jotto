@@ -36,17 +36,35 @@ it("does not throw warning with expected props", () => {
 });
 
 describe("state controlled input field", () => {
-  it("state updates with value of input box upon change", () => {
-    const mockSetCurrentGuess = jest.fn();
+  let mockSetCurrentGuess = jest.fn();
+  let originalUseState;
+  let wrapper;
 
+  beforeEach(() => {
+    mockSetCurrentGuess.mockClear();
+    originalUseState = React.useState;
     React.useState = jest.fn(() => ["", mockSetCurrentGuess]);
+    wrapper = setup();
+  });
 
-    const wrapper = setup();
+  afterEach(() => {
+    React.useState = originalUseState;
+  });
+
+  it("state updates with value of input box upon change", () => {
     const inputBox = findyByTestAttr(wrapper, "input-box");
-
     const mockEvent = { target: { value: "train" } };
+
     inputBox.simulate("change", mockEvent);
 
     expect(mockSetCurrentGuess).toHaveBeenCalledWith("train");
+  });
+
+  it("clears field when submit is clicked", () => {
+    const inputSubmit = findyByTestAttr(wrapper, "input-submit");
+
+    inputSubmit.simulate("click", { preventDefault() {}});
+
+    expect(mockSetCurrentGuess).toHaveBeenCalledWith("");
   });
 });

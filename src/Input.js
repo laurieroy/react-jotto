@@ -4,6 +4,15 @@ import PropTypes from "prop-types";
 function Input({ secretWord }) {
   const [currentGuess, setCurrentGuess] = React.useState("");
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // TODO: add current guess to guessedWords
+    // TODO: Check guess against secretWord
+    // TODO: Update success if match
+    setCurrentGuess("")
+  };
+
   return (
     <div data-test="component-input">
       <form className="form-inline">
@@ -15,7 +24,12 @@ function Input({ secretWord }) {
           value={currentGuess}
           onChange={(event) => setCurrentGuess(event.target.value)}
         />
-        <button type="submit" className="btn btn-orimary mb-2">
+        <button
+          type="submit"
+          data-test="input-submit"
+          className="btn btn-orimary mb-2"
+          onClick={handleSubmit}
+        >
           Submit
         </button>
       </form>
