@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { shallow } from "enzyme";
 
 import { findyByTestAttr, checkProps } from "./test/testUtils";
@@ -33,4 +33,20 @@ it("renders without error", () => {
 
 it("does not throw warning with expected props", () => {
   checkProps(Input, { secretWord: "party" });
+});
+
+describe("state controlled input field", () => {
+  it("state updates with value of input box upon change", () => {
+    const mockSetCurrentGuess = jest.fn();
+
+    React.useState = jest.fn(() => ["", mockSetCurrentGuess]);
+
+    const wrapper = setup();
+    const inputBox = findyByTestAttr(wrapper, "input-box");
+
+    const mockEvent = { target: { value: "train" } };
+    inputBox.simulate("change", mockEvent);
+
+    expect(mockSetCurrentGuess).toHaveBeenCalledWith("train");
+  });
 });
