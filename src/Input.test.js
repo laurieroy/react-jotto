@@ -20,16 +20,66 @@ import Input from "./Input";
 
 //   return shallow(<Input {...setupProps} />);
 // };
-const setup = (secretWord = "party") => {
-  return shallow(<Input secretWord={secretWord} />);
+const setup = (success = false, secretWord = "party") => {
+  return shallow(<Input secretWord={secretWord} sucess={success} />);
 };
 
-it("renders without error", () => {
-  const wrapper = setup();
-  const inputComponent = findyByTestAttr(wrapper, "component-input");
+describe("render", () => {
+  describe("success is true", () => {
+    let wrapper 
 
-  expect(inputComponent.length).toBe(1);
+    beforeEach(()=>{
+     wrapper = setup(true);
+    })
+
+    it("Input renders without error", () => {
+   
+      const inputComponent = findyByTestAttr(wrapper, "component-input");
+    
+      expect(inputComponent.length).toBe(1);
+    });
+
+    it("input box does not show", () => {
+      const inputBox = findyByTestAttr(wrapper, "input-box")
+
+      expect(inputBox.exists()).toBe(false);
+    })
+
+    it("submit button does not show", () => {
+      const submitBtn = findyByTestAttr(wrapper, "input-submit")
+
+      expect(submitBtn.exists()).toBe(false);
+    })
+  });
+
+  describe("success is false", () => {
+    let wrapper 
+
+    beforeEach(()=>{
+     wrapper = setup(false);
+    })
+
+    it("renders without error", () => {
+   
+      const inputComponent = findyByTestAttr(wrapper, "component-input");
+    
+      expect(inputComponent.length).toBe(1);
+    });
+
+    it("input box shows", () => {
+      const inputBox = findyByTestAttr(wrapper, "input-box")
+
+      expect(inputBox.exists()).toBe(true);
+    })
+
+    it("submit button shows", () => {
+      const submitBtn = findyByTestAttr(wrapper, "input-submit")
+
+      expect(submitBtn.exists()).toBe(true);
+    })
+  });
 });
+
 
 it("does not throw warning with expected props", () => {
   checkProps(Input, { secretWord: "party" });
@@ -61,10 +111,12 @@ describe("state controlled input field", () => {
   });
 
   it("clears field when submit is clicked", () => {
-    const inputSubmit = findyByTestAttr(wrapper, "input-submit");
+    const inputSubmitBtn = findyByTestAttr(wrapper, "input-submit");
 
-    inputSubmit.simulate("click", { preventDefault() {}});
+    inputSubmitBtn.simulate("click", { preventDefault() {} });
 
     expect(mockSetCurrentGuess).toHaveBeenCalledWith("");
   });
+
+  // it("renders correctly when ");
 });

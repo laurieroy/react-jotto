@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function Input({ secretWord }) {
+function Input({ secretWord, success }) {
   const [currentGuess, setCurrentGuess] = React.useState("");
 
   const handleSubmit = (e) => {
@@ -10,9 +10,13 @@ function Input({ secretWord }) {
     // TODO: add current guess to guessedWords
     // TODO: Check guess against secretWord
     // TODO: Update success if match
-    setCurrentGuess("")
+    setCurrentGuess("");
   };
 
+  if (success) {
+    return <div data-test="component-input"></div>;
+  }
+    
   return (
     <div data-test="component-input">
       <form className="form-inline">
