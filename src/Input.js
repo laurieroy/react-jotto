@@ -31,7 +31,7 @@ function Input({ secretWord, success }) {
         <button
           type="submit"
           data-test="input-submit"
-          className="btn btn-orimary mb-2"
+          className="btn btn-primary mb-2"
           onClick={handleSubmit}
         >
           Submit

@@ -1,7 +1,7 @@
 import { shallow } from "enzyme";
 import App from "./App";
 
-import { findyByTestAttr } from "./test/testUtils";
+import { findyByTestAttr } from "../test/testUtils";
 
 /**
  * Setup function for App component
